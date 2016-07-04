@@ -49,8 +49,7 @@
           <tr>
             <td>{{ item.title }}</td>
             <td>{{ item.description }}</td>
-            <!-- fix this !-->
-            <td>{{ categories[item.cat_id] }}</td>
+            <td>{{ item.category.title }}</td>
           </tr>
          {% endfor %}
         </table>
