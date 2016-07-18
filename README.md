@@ -1,6 +1,6 @@
 # Items Catalog
 
-The Item Catalog project is an application that provides a list of items within a variety of categories, as well providing a user registration and authentication system.
+The Item Catalog project is an application that provides a list of items within a variety of categories, as well providing a user registration and authentication system. Registered users will have the ability to post, edit and delete their own items.
 
 ## Quick Start
 
