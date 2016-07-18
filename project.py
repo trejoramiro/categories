@@ -15,7 +15,7 @@ from database_setup import Base, Category, Item
 
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 
-import httplib2, json, requets, random, string
+import httplib2, json, requests, random, string
 
 engine = create_engine('sqlite:///categoryitem.db')
 Base.metadata.bind = engine
@@ -47,7 +47,7 @@ def create():
 
 
 @app.route('/items/<int:category_id>')
-def showCategory(category_id):
+def show(category_id):
     # Displays only one item
     #if there are no items to show then have the html flash a message
     categories = session.query(Category).order_by(Category.title).all()
