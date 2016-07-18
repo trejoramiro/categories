@@ -1,12 +1,12 @@
 # Items Catalog
 
-The Item Catalog project is an application that provides a list of items within a variety of categories, as well provideing a user registration and authentication system.
+The Item Catalog project is an application that provides a list of items within a variety of categories, as well providing a user registration and authentication system.
 
 ## Quick Start
 
-## Running locally
+## Running Locally
 
-## What's included
+## What's Included
 
 ## Creator
 
@@ -15,4 +15,4 @@ The Item Catalog project is an application that provides a list of items within 
 
 ## Copyright and license
 
-Code and Documentation 2015. Code released under the GNU General Public Licence.
+Code and Documentation 2016. Code released under the GNU General Public Licence.
