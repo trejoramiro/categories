@@ -1,7 +1,7 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
+# from sqlalchemy import create_engine
 
 Base = declarative_base()
 
@@ -28,6 +28,7 @@ class Item(Base):
     description = Column(String(250))
     cat_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
+    # add an image url category of string type
 
     @property
     def serialize(self):

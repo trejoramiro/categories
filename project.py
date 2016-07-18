@@ -1,26 +1,21 @@
 """Item Catalog Project
 Displays sports categories and their respective product items.
 
-Created: 2014
+Created: 2015
 Author: Ramiro Trejo
 """
 
-from flask import Flask, render_template, redirect, request, url_for, flash, jsonify
+from flask import Flask, render_template, redirect, request, url_for, flash, jsonify, make_response
+from flask import session as login_session
 app = Flask(__name__)
 
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
 
-from flask import session as login_session
-import random, string
+from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.client import FlowExchangeError
-import httplib2
-import json
-from flask import make_response
-import requests
+import httplib2, json, requets, random, string
 
 engine = create_engine('sqlite:///categoryitem.db')
 Base.metadata.bind = engine
@@ -28,17 +23,32 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 @app.route('/')
-@app.route('/home')
-def showCategories():
-    # page must show most recently added items
+@app.route('/items')
+def index():
+    # Displays most recent items.
     recentItems = session.query(Item).order_by(Item.id.desc()).limit(5)
     categoryList = session.query(Category).order_by(Category.title).all()
     return render_template('index.html', categories=categoryList, items=recentItems)
 
 
-@app.route('/category/<int:category_id>')
+@app.route('/items/new')
+def new():
+    categories = session.query(Category).order_by(Category.title).all()
+    return render_template('new.html', categories=categories)
+
+
+@app.route('/items', methods=['POST'])
+def create():
+    #create the newly made item
+    #save it to the database
+    redirect('/items/<int:category_id>')
+
+
+@app.route('/items/<int:category_id>')
 def showCategory(category_id):
+    # Displays only one item
     #if there are no items to show then have the html flash a message
     categories = session.query(Category).order_by(Category.title).all()
     category = session.query(Category).filter_by(id=category_id).one()
@@ -62,44 +72,33 @@ def showCategory(category_id):
         return render_template('show_category.html', category=category, items=items, categories=categories)
     else:
         return render_template('show_category.html', category=category, items=items, categories=categories)
-    #return "Shows category %s and all of its items" % category_id
 
 
 @app.route('/login')
 def login():
     return render_template('login.html')
 
-@app.route('/category/<int:category_id>/edit')
-def editCategory(category_id):
-    return "Edit the Category %s name" % category_id
 
-
-@app.route('/category/<int:category_id>/delete')
-def deleteCategory(category_id):
+@app.route('/items/<int:category_id>')
+def destroy(category_id):
     return "Delete the Category %s" % category_id
 
 
-@app.route('/category/new_item')
-def newItem():
-    categories = session.query(Category).order_by(Category.title).all()
-    return render_template('new_item.html', categories=categories)
-
-
-@app.route('/category/<int:category_id>/item/<int:item_id>')
-def showItem(category_id, item_id):
+@app.route('/items/<int:category_id>/item/<int:item_id>')
+def show(category_id, item_id):
     return "Show item %s page" % item_id
 
 
-@app.route('/category/<int:category_id>/item/<int:item_id>/edit')
-def editItem(category_id, item_id):
+@app.route('/items/<int:category_id>/item/<int:item_id>/edit')
+def edit(category_id, item_id):
     # return "Edit item %s page" % item_id
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(id=item_id).one()
     return render_template('edit_item.html', category=category, item=item)
 
 
-@app.route('/category/<int:category_id>/item/<int:item_id>/delete')
-def deleteItem(category_id, item_id):
+@app.route('/items/<int:category_id>/item/<int:item_id>')
+def delete(category_id, item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(id=item_id).one()
     return render_template('deleteItem.html', category=category, item=item)
