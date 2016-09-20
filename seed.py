@@ -20,6 +20,6 @@ list_of_categories = [ 'Soccer',
 
 for item in list_of_categories:
 
-    newCategory = Category(title = item)
+    newCategory = Category(name = item)
     session.add(newCategory)
     session.commit()
