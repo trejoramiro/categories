@@ -1,8 +1,12 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js"></script>
+</head>
+
+<body>
 <!-- start of main navigation bar !-->
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -14,13 +18,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href='{{url_for('showCategories')}}'>Item Catalog</a>
+      <a class="navbar-brand" href='{{url_for('index')}}'>Item Catalog</a>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-          <a class="btn btn-primary" role="button" style='color: white' href='{{url_for('newItem')}}'>New Item</a>
+          <a class="btn btn-primary" role="button" style='color: white' href='{{url_for('new')}}'>New Item</a>
         </li>
         <li>
           <a class="btn btn-primary" role="button" style= 'color: white' href='{{url_for('login')}}'>Log In</a>
@@ -35,7 +39,7 @@
       <div class="col-md-2">
         <ul class="list-unstyled">
           {% for item in categories %}
-          <li><a href='{{url_for('showCategory', category_id=item.id)}}'>{{ item.title }} </a> </li>
+          <li><a href='{{url_for('show', category_id=item.id)}}'>{{ item.name }} </a> </li>
           {% endfor %}
         </ul>
       </div>
@@ -47,9 +51,9 @@
           <th> Category </th>
           {% for item in items %}
           <tr>
-            <td>{{ item.title }}</td>
+            <td>{{ item.name }}</td>
             <td>{{ item.description }}</td>
-            <td>{{ item.category.title }}</td>
+            <td>{{ item.category.name }}</td>
           </tr>
          {% endfor %}
         </table>
@@ -58,4 +62,7 @@
     </div> <!-- class=row !-->
   </div>
 </nav>
+
+</body>
+
 </html>
