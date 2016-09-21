@@ -14,6 +14,10 @@ class Category(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(250), nullable = False)
 
+
+    def __repr__(self):
+        return "<Category(id='%s', name='%s')>" % (self.id, self.name)
+
     @property
     def serialize(self):
         return {
@@ -35,13 +39,16 @@ class Item(Base):
     cat_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
 
+    def __repr__(self):
+        return "<Item(id='%s',name='%s',description='%s',price='%s',cat_id='%s')>" % (self.id, self.name, self.description, self.price)
+
     @property
     def serialize(self):
         return {
             'id' : self.id,
             'name' : self.name,
             'description' : self.description,
-            'cat_id' : self.cat_id,
+            'category' : self.cat_id
         }
 
 
@@ -53,6 +60,9 @@ class Image(Base):
     url = Column(String(500))
     item_id = Column(Integer, ForeignKey('item.id'))
     item = relationship(Item)
+
+    def __repr__(self):
+        return "<Image(id='%s', url='%s', item_id='%s')>" % (self.id, self.url, self.item_id)
 
     @property
     def serialize(self):
@@ -75,6 +85,9 @@ class Stock(Base):
     item_id = Column(Integer, ForeignKey('item.id'))
     item = relationship(Item)
 
+    def __repr__(self):
+        return "<Stock(id='%s', color='%s', size='%s', quantity='%s', last_updated='%s', item_id='%s')>" % (self.id, self.color, self.size, self.quantity, self.last_updated, self.item_id)
+
     @property
     def serialize(self):
         return {
@@ -93,6 +106,9 @@ class User(Base):
     id = Column(Integer, primary_key = True)
     username = Column(String(200), nullable = False)
     admin = Column(Boolean, nullable = False)
+
+    def __repr__(self):
+        return "<User(id='%s',username='%s',admin='%s')>" % (self.id, self.username, self.admin)
 
 
 class Review(Base):
@@ -120,6 +136,8 @@ class Review(Base):
         'item' : self.item_id,
         }
 
+    def __repr__(self):
+        return "<Review(id='%s', body='%s', rating='%s', user='%s', created_at='%s', item='%s')>" % (self.id, self.body, self.rating, self.user, self.created_at, self.item)
 
 engine = create_engine('sqlite:///categoryitem.db')
 
