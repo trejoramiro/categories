@@ -1,34 +1,36 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
 
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" integrity="sha384-pVJelSCJ58Og1XDc2E95RVYHZDPb9AVyXsI8NoVpB2xmtxoZKJePbMfE4mlXw7BJ" crossorigin="anonymous">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script src="{{url_for('static', filename='app.js')}}"></script>
+  <script src="{{url_for('static', filename='appCtrl.js')}}"></script>
+</head>
+
+<body ng-app="app">
 <nav class="navbar navbar-default">
   <div class="container">
 
     <div class="navbar-header">
-      <a class="navbar-brand" href='{{url_for('showCategories')}}'>Item Catalog</a>
+      <a class="navbar-brand" href='{{url_for('index')}}'>Item Catalog</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li>
-          <a class="btn btn-default" role="button" href='{{url_for('newItem')}}'>New Item</a>
+          <a class="btn btn-primary" role="button" href='{{url_for('new')}}'>New Item</a>
         </li>
         <li>
           <a class="btn btn-primary" role="button" style= 'color: white' href='#'>Log In</a>
         </li>
       </ul>
     </div>
-
+  </nav>
     <div class="row">
 
-      <div class="col-md-2">
-        <ul class="list-unstyled">
-          {% for item in categories %}
-          <li><a href='{{url_for('showCategory',category_id=item.id)}}'>{{ item.title }} </a> </li>
-          {% endfor %}
-        </ul>
-      </div>
 
       <div class="col-md-10">
 
@@ -51,7 +53,7 @@
             <td>{{ item.title }}</td>
             <td>{{ item.description }}</td>
             <td>{{ category.title }}</td>
-            <td> <a class="btn btn-default" href='{{url_for('editItem', category_id = category.id, item_id = item.id )}}'>Edit</a> <a class="btn btn-default" href='{{url_for('deleteItem',category_id = category.id, item_id = item.id)}}'> Delete </a></td>
+            <td> <a class="btn btn-default" href='{{url_for('edit', category_id = category.id, item_id = item.id )}}'>Edit</a> <a class="btn btn-default" href='{{url_for('destroy',category_id = category.id, item_id = item.id)}}'> Delete </a></td>
           </tr>
           {% endfor %}
         </table>
@@ -59,5 +61,5 @@
 
     </div> <!-- class=row !-->
   </div>
-</nav>
+</body>
 </html>

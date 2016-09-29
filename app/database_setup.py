@@ -48,7 +48,7 @@ class Item(Base):
             'id' : self.id,
             'name' : self.name,
             'description' : self.description,
-            'category' : self.cat_id
+            'categoryId' : self.cat_id
         }
 
 
@@ -69,7 +69,7 @@ class Image(Base):
         return {
             'id': self.id,
             'url': self.url,
-            'item_id': self.item_id
+            'itemId': self.item_id
         }
 
 
@@ -95,7 +95,7 @@ class Stock(Base):
             'color' : self.color,
             'size': self.size,
             'quantity' : self.quantity,
-            'item_id' : self.item_id,
+            'itemId' : self.item_id,
         }
 
 
@@ -132,7 +132,7 @@ class Review(Base):
         'body' : self.body,
         'rating' : self.rating,
         'user' : self.user_name,
-        'created_at' : self.created_at,
+        'createdAt' : self.created_at,
         'item' : self.item_id,
         }
 

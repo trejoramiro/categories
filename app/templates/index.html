@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" integrity="sha384-pVJelSCJ58Og1XDc2E95RVYHZDPb9AVyXsI8NoVpB2xmtxoZKJePbMfE4mlXw7BJ" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+  <script src="{{ url_for('static', filename='scripts/app.js') }}"></script>
+  <script src="{{ url_for('static', filename='scripts/services/items.js') }}"></script>
+  <script src="{{ url_for('static', filename='scripts/controllers/appCtrl.js') }}"></script>
+
+  <style>
+  input {
+    border: none;
+  }
+
+  input:focus {
+      outline:none;
+  }
+
+  #todo-list tr.editing {
+  	border-bottom: none;
+  	padding: 0;
+  }
+
+  #todo-list tr.editing .edit {
+  	display: block;
+  	width: 506px;
+  	padding: 13px 17px 12px 17px;
+  	margin: 0 0 0 43px;
+  }
+
+  #todo-list tr.editing .view {
+  	display: none;
+  }
+
+  #todo-list tr .edit {
+  	display: none;
+  }
+
+  #todo-list tr.editing:last-child {
+  	margin-bottom: -1px;
+  }
+  </style>
+</head>
+
+<body ng-app="app">
+<!-- start of main navigation bar !-->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <!-- mobile vertical / toggle view !-->
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation </span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href='{{url_for('index')}}'>Item Catalog</a>
+    </div>
+
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a class="btn btn-primary" role="button" style='color: white' href='{{url_for('new')}}'>New Item</a>
+        </li>
+        <li>
+          <a class="btn btn-primary" role="button" style= 'color: white' href='{{url_for('login')}}'>Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div> <!--- container fluid !-->
+</nav>
+
+    <div class="row">
+      <div ng-controller="categoriesCtrl" ng-init="setUp()">
+
+      <div class="col-md-2">
+        <ul class="list-unstyled">
+          <span ng-repeat="category in categories">
+          <li><a ng-click="changeItems(category)">{| category.name |} </a> </li>
+          <span>
+        </ul>
+      </div>
+
+      <div class="col-md-10">
+        <h2>{| title |}</h2>
+        <table class="table table-striped">
+          <th> Name </th>
+          <th> Description </th>
+          <th> Category </th>
+          <th> Remove </th>
+          <th> Update </th>
+
+
+          <span id="todo-list">
+          <tr ng-repeat="item in items track by $index">
+            <div class="view">
+              <td>{| item.name |}</td>
+              <td>{| item.description |}</td>
+              <td>{| getCategoryName(item) |}</td>
+            </div>
+            <td><button class="btn btn-primary" ng-click="removeItem($index)"> Remove </button></td>
+            <td><button class="btn btn-primary" ng-click="updateItem($index)"> Update </button></td>
+
+          </tr>
+          </span>
+        </table>
+
+        <div class="input-group">
+            <h2>Add</h2>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" placeholder="Name" ng-model="inputName" ng-keyup="validateInput(inputName)">
+            </div>
+            <div class="form-group">
+              <label>Image</label>
+              <input type="text" class="form-control" placeholder="Url" ng-model="inputImageUrl" ng-keyup="validateInput(inputImageUrl)">
+            </div>
+            <div class="form-group">
+              <label>Price</label>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Price" ng-model="inputPrice" ng-keyup="validateInput(inputPrice)">
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea type="text" class="form-control" placeholder="Description" ng-model="inputDescription"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="ngvalueselect">Category</label>
+              <select class="form-control" name="ngvalueselect" ng-model="inputCategory" style="float: none;">
+                  <option value="3">Baseball</option>
+                  <option value="2">Basketball</option>
+                  <option value="7">Foosball</option>
+                  <option value="4">Frisbee</option>
+                  <option value="9">Hockey</option>
+                  <option value="6">Rock Climbing</option>
+                  <option value="8">Skating</option>
+                  <option value="5">Snowboarding</option>
+                  <option value="1">Soccer</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" ng-class="{ 'disabled' : emptyInputFields }" type="submit" value="Create" ng-click="createItem(inputName, inputDescription, inputCategory)">Add</buttON
+        </div>
+
+    </div>
+    </div> <!-- class=row !-->
+
+</body>
+
+</html>

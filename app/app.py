@@ -7,6 +7,7 @@ Author: Ramiro Trejo
 
 from flask import Flask, render_template, redirect, request, url_for, flash, jsonify, make_response
 from flask import session as login_session
+
 app = Flask(__name__)
 
 from sqlalchemy import create_engine, asc
@@ -33,6 +34,14 @@ def index():
     return render_template('index.html', categories=categoryList, items=recentItems)
 
 
+@app.route('/categories/JSON')
+def indexJson():
+    recentItems = session.query(Item).order_by(Item.id.desc()).limit(5)
+    categoryList = session.query(Category).order_by(Category.name).all()
+    return jsonify(items=[i.serialize for i in recentItems],
+                   categories=[i.serialize for i in categoryList])
+
+
 @app.route('/categories/new')
 def new():
     #categories = session.query(Category).order_by(Category.title).all()
@@ -41,7 +50,6 @@ def new():
 
 @app.route('/categories', methods=['POST'])
 def create():
-    #create a new item
     newItem = Item(
         name = name,
         description = description,
@@ -54,6 +62,18 @@ def create():
     redirect('/categories/item/<int:item_id>')
 
 
+@app.route('/items/JSON', methods=['POST'])
+def createJSON():
+    newItem = Item(
+        name = request.form['name'],
+        description = request.form['description'],
+        cat_id = int(request.form['category'])
+        )
+    session.add(newItem)
+    session.commit()
+    return jsonify(status="200")
+
+
 @app.route('/categories/item/<int:item_id>')
 def showItem(item_id):
     item = session.query(Item).filter_by(id=item_id)
@@ -64,12 +84,10 @@ def showItem(item_id):
 def show(category_id):
     # Displays only one item
     #if there are no items to show then have the html flash a message
-    categories = session.query(Category).order_by(Category.title).all()
+    categories = session.query(Category).order_by(Category.name).all()
     category = session.query(Category).filter_by(id=category_id).one()
     # will probably need to have a try to see whether the query function returns something
     # if the query function returns an exception then notify the user
-    print category
-    print category.id
     # Baseball - 3
     # Basketball - 2
     # Foosball - 7
@@ -81,11 +99,19 @@ def show(category_id):
     # Soccer - 1
     items = session.query(Item).filter_by(cat_id=category_id).all()
     if not items:
-        string = "No items found under " + category.title
+        string = "No items found under " + category.name
         flash(string)
         return render_template('show_category.html', category=category, items=items, categories=categories)
     else:
         return render_template('show_category.html', category=category, items=items, categories=categories)
+
+
+@app.route('/categories/<int:category_id>/JSON')
+def showJSON(category_id):
+    categories = session.query(Category).order_by(Category.name).all()
+    category = session.query(Category).filter_by(id=category_id).one()
+    items = session.query(Item).filter_by(cat_id=category_id).all()
+    return jsonify(items=[i.serialize for i in items])
 
 
 @app.route('/categories/<int:category_id>/item/<int:item_id>/edit')
@@ -108,14 +134,16 @@ def destroy(category_id, item_id):
     return render_template('delete_item.html', category=category, item=item)
 
 
+@app.route('/items/<int:item_id>/JSON', methods=['DELETE'])
+def destroyJSON(item_id):
+    session.query(Item).filter_by(id=item_id).delete()
+    session.commit()
+    return jsonify(status="200")
+
+
 @app.route('/login')
 def login():
     return render_template('login.html')
-
-
-# @app.route('/catalog.json')
-# def json():
-    # return the data in json form
 
 
 @app.errorhandler(404)

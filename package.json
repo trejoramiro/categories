@@ -1,0 +1,29 @@
+{
+  "name": "categories",
+  "version": "1.0.0",
+  "description": "Single-page CRUD application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/trejoramiro/categories.git"
+  },
+  "author": "Ramiro Trejo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trejoramiro/categories/issues"
+  },
+  "homepage": "https://github.com/trejoramiro/categories#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-karma": "^2.0.0",
+    "jasmine": "^2.5.2",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.3.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-jasmine": "^1.0.2"
+  }
+}
