@@ -14,12 +14,12 @@
 
     };
 
-    $scope.createItem = function(inputName, inputDescription, inputCategory) {
+    $scope.createItem = function() {
 
       var item = {
-        name: inputName,
-        description: inputDescription,
-        category: inputCategory
+        name: $scope.inputName,
+        description: $scope.inputDescription,
+        category: $scope.inputCategory
       };
 
       $scope.items.push(item);
@@ -61,12 +61,10 @@
       console.log(index);
     }
 
-    $scope.getCategoryName = function(item) {
-      for(var i=0; i<$scope.categories; i++) {
-        if($scope.categories[i].id === item.categoryId) {
+    $scope.getCategoryName = function(categoryId) {
+      for(var i = 0; i < $scope.categories.length; i++){
+        if($scope.categories[i].id == categoryId)
           return $scope.categories[i].name;
-      }
-      return null;
     }
   }
 

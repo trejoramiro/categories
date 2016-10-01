@@ -99,7 +99,7 @@
             <div class="view">
               <td>{| item.name |}</td>
               <td>{| item.description |}</td>
-              <td>{| getCategoryName(item) |}</td>
+              <td>{| getCategoryName(item.categoryId) |}</td>
             </div>
             <td><button class="btn btn-primary" ng-click="removeItem($index)"> Remove </button></td>
             <td><button class="btn btn-primary" ng-click="updateItem($index)"> Update </button></td>
@@ -140,7 +140,7 @@
                   <option value="1">Soccer</option>
               </select>
             </div>
-            <button class="btn btn-primary" ng-class="{ 'disabled' : emptyInputFields }" type="submit" value="Create" ng-click="createItem(inputName, inputDescription, inputCategory)">Add</buttON
+            <button class="btn btn-primary" ng-class="{ 'disabled' : emptyInputFields }" type="submit" value="Create" ng-click="createItem()">Add</buttON
         </div>
 
     </div>
