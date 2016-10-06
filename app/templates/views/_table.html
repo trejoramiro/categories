@@ -1,0 +1,57 @@
+<h2>{| title |}</h2>
+<table class="table table-striped">
+  <th> Name </th>
+  <th> Description </th>
+  <th> Category </th>
+  <th> Remove </th>
+  <th> Update </th>
+
+
+  <span id="todo-list">
+  <tr ng-repeat="item in items track by $index">
+    <div class="view">
+      <td>{| item.name |}</td>
+      <td>{| item.description |}</td>
+      <td>{| getCategoryName(item.categoryId) |}</td>
+    </div>
+    <td><button class="btn btn-primary" ng-click="removeItem($index)"> Remove </button></td>
+    <td><button class="btn btn-primary" ng-click="updateItem($index)"> Update </button></td>
+
+  </tr>
+  </span>
+</table>
+
+<div class="input-group">
+    <h2>Add</h2>
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" class="form-control" placeholder="Name" ng-model="inputName" ng-keyup="validateInput(inputName)">
+    </div>
+    <div class="form-group">
+      <label>Image</label>
+      <input type="text" class="form-control" placeholder="Url" ng-model="inputImageUrl" ng-keyup="validateInput(inputImageUrl)">
+    </div>
+    <div class="form-group">
+      <label>Price</label>
+        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Price" ng-model="inputPrice" ng-keyup="validateInput(inputPrice)">
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea type="text" class="form-control" placeholder="Description" ng-model="inputDescription"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="ngvalueselect">Category</label>
+      <select class="form-control" name="ngvalueselect" ng-model="inputCategory" style="float: none;">
+          <option value="3">Baseball</option>
+          <option value="2">Basketball</option>
+          <option value="7">Foosball</option>
+          <option value="4">Frisbee</option>
+          <option value="9">Hockey</option>
+          <option value="6">Rock Climbing</option>
+          <option value="8">Skating</option>
+          <option value="5">Snowboarding</option>
+          <option value="1">Soccer</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" ng-class="{ 'disabled' : emptyInputFields }" type="submit" value="Create" ng-click="createItem()">Add</buttON
+</div>

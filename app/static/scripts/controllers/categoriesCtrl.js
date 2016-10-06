@@ -1,10 +1,10 @@
 /* global angular */
 (function() {
-  angular.module('app').controller('categoriesCtrl', function($scope, $http, Items) {
+  angular.module('app').controller('categoriesCtrl', function($scope, $http, $location, Items, $routeParams) {
 
     $scope.title = "Recent";
     $scope.editedItem = null;
-    $scope.emptyInputFields = true;
+    $scope.emptyInputFields = false;
 
     $scope.setUp = function() {
       Items.load().then(function (response) {
@@ -68,6 +68,11 @@
     }
   }
 
+  $scope.$watch(function() {
+    return $location.path();
+  }, function(newPath) {
+    $scope.title = "New"
+  })
 
     window.$scope = $scope;
 

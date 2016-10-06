@@ -80,12 +80,12 @@ def showItem(item_id):
     return render_template('show_item.html', item=item)
 
 
-@app.route('/categories/<int:category_id>')
-def show(category_id):
+@app.route('/categories/tables')
+def show():
     # Displays only one item
     #if there are no items to show then have the html flash a message
-    categories = session.query(Category).order_by(Category.name).all()
-    category = session.query(Category).filter_by(id=category_id).one()
+    # categories = session.query(Category).order_by(Category.name).all()
+    # category = session.query(Category).filter_by(id=category_id).one()
     # will probably need to have a try to see whether the query function returns something
     # if the query function returns an exception then notify the user
     # Baseball - 3
@@ -97,13 +97,14 @@ def show(category_id):
     # Skating - 8
     # Snowboarding - 5
     # Soccer - 1
-    items = session.query(Item).filter_by(cat_id=category_id).all()
-    if not items:
-        string = "No items found under " + category.name
-        flash(string)
-        return render_template('show_category.html', category=category, items=items, categories=categories)
-    else:
-        return render_template('show_category.html', category=category, items=items, categories=categories)
+    # items = session.query(Item).filter_by(cat_id=category_id).all()
+    # if not items:
+    #     string = "No items found under " + category.name
+    #     flash(string)
+    #     return render_template('show_category.html', category=category, items=items, categories=categories)
+    # else:
+    #     return render_template('show_category.html', category=category, items=items, categories=categories)
+    return render_template('_table.html')
 
 
 @app.route('/categories/<int:category_id>/JSON')
@@ -140,11 +141,18 @@ def destroyJSON(item_id):
     session.commit()
     return jsonify(status="200")
 
+@app.route('/analytics')
+def analytics():
+    return render_template('views/_analytics.html')
+
+@app.route('/table')
+def tables():
+    return render_template('views/_table.html')
+
 
 @app.route('/login')
 def login():
     return render_template('login.html')
-
 
 @app.errorhandler(404)
 def notFoundError(error):
@@ -156,6 +164,7 @@ def notFoundError(error):
 def internalError(error):
     # render_template('500.html'), 500
     return "Error %s" % 500
+
 
 
 if __name__ == '__main__':
