@@ -1,7 +1,7 @@
 /* global angular */
 (function() {
   angular.module('app').controller('analyticsCtrl', function($scope, $http, $location, $routeParams) {
-          $scope.message = "Hello World";
+          $scope.message = "Hello World!";
 
           $scope.setUp = function() {
             console.log("Setup");
@@ -38,6 +38,6 @@
             },
           ];
 
-          
+
   })
 })();
