@@ -1,12 +1,14 @@
 /* global angular */
 
 (function() {
-  var app = angular.module('app',['ngRoute']);
+  var app = angular.module('app',['ngRoute', 'app.directives', 'd3']);
+
+  angular.module('d3', []) // this is needed, it broke before, must learn why!
+  angular.module('app.directives', ['d3']);
 
   app.config(['$interpolateProvider', function($interpolateProvider) {
     $interpolateProvider.startSymbol('{|');
     $interpolateProvider.endSymbol('|}');
-
 }]);
 
   app.config(['$httpProvider', function($httpProvider) {
