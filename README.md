@@ -19,24 +19,33 @@ SQLite
 
 ## Categories
 
-Search all existing categories.
+Return all categories.
 
-### Request
 `GET /v1/categories`
 
-Example:
+Get one category.
 
-```json
-
-```
-
-Get one category
 `GET /v1/categories/{id}`
 
-Get most recent items from a category
+Create a category.
 
-`GET /v1/categories/{id}/popular`
+`POST /v1/categories`
 
+| Query Parameter | Value |
+|---|---|
+|  name | *Required.* |
+
+Delete a category.
+
+`DELETE /v1/categories/{id}`
+
+Get all items from a category.
+
+`GET /v1/categories/{id}/items`
+
+Get most recent items from a category.
+
+`GET /v1/categories/{id}/newest`
 
 ## Items
 
@@ -44,24 +53,89 @@ Get an item.
 
 `GET /v1/items/{id}`
 
-Create an item
-### Request
+Create an item.
 
-`POST /v1/items`
+`POST /v1/items/`
 
-Get an item.
+| Query Parameter | Value |
+|---|---|
+| name | *Required.* |
+| category_id | *Required.* |
+| description | *Optional.* |
+| price | *Optional.* |
 
-### Request
-`GET /v1/items/{id}`
+Update an item.
 
-### Response
+`PUT /v1/items/`
 
-On success, response body contains an array of objects. If no matches are found, an empty array is returned.
+Delete an item.
+`DELETE /v1/items/{id}`
 
-On error, the header status code is an error code and the response body contains an error object.
+## Images
 
-Example:
+Get all images of an item.
 
-```json
+`GET /v1/items/{id}/images`
 
-```
+Get an image from an item.
+
+`GET /v1/items/{id}/images/{id}`
+
+Save an image to an item.
+
+`POST /v1/items/{id}/images`
+
+| Query Parameter | Value |
+|---|---|
+| url | *Required.* |
+| item_id | *Required* |
+
+Delete an image from an item.
+
+`DELETE /v1/items/{id}/images`
+
+## Stocks
+
+Get the stock info. of an item.
+
+`GET /v1/items/{id}/stock`
+
+Create stock info. for an item.
+
+`POST /v1/items/{id}/stock`
+
+| Query Parameter | Value |
+|---|---|
+| quantity | *Required.* |
+| item_id | *Required* |
+|  color | *Optional.* |
+| size | *Optional.*  |
+
+Update the stock info. of an item.
+
+`PUT /v1/items/{id}/stock`
+
+Delete the stock info. of an item.
+
+`DELETE /v1/items/{id}/stock`
+
+## Reviews
+
+Get all reviews of an item.
+
+`GET /v1/items/{id}/reviews`
+
+Get a review of an item.
+
+`GET /v1/items/{id}/reviews/{id}`
+
+Create a review for an item.
+
+`POST /v1/items/{id}/reviews`
+
+| Query Parameter | Value |
+|---|---|
+| rating | *Required.* |
+| user_id | *Required.* |
+| item_id | *Required.* |
+|  body | *Optional.* |
