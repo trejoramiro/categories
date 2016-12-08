@@ -118,7 +118,6 @@ class Review(Base):
     id = Column(Integer, primary_key = True)
     body = Column(String(400), nullable = False)
     rating = Column(Integer, nullable = False)
-    #user_name = Column(String(16), nullable = False)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
     created_at = Column(DateTime, onupdate = datetime.datetime.now)
