@@ -13,6 +13,7 @@ Bootstrap
 
 #### Back-End
 Flask
+
 SQLite
 
 # API Endpoint Reference
@@ -55,7 +56,7 @@ Get an item.
 
 Create an item.
 
-`POST /v1/items/`
+`POST /v1/items`
 
 | Query Parameter | Value |
 |---|---|
@@ -66,7 +67,7 @@ Create an item.
 
 Update an item.
 
-`PUT /v1/items/`
+`PUT /v1/items`
 
 Delete an item.
 `DELETE /v1/items/{id}`
@@ -88,7 +89,7 @@ Save an image to an item.
 | Query Parameter | Value |
 |---|---|
 | url | *Required.* |
-| item_id | *Required* |
+| item_id | *Required.* |
 
 Delete an image from an item.
 
